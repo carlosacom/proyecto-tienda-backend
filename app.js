@@ -17,10 +17,12 @@ app.use(cors ({ origin:true, credentials:true }));
 const productRoutes = require('./routes/product');
 const categoryRoutes = require('./routes/category');
 const orderRoutes = require('./routes/order');
+const productCategoryRoutes = require('./routes/product_category');
 
 // rutas 
 app.use('/product', productRoutes);
 app.use('/category', categoryRoutes);
 app.use('/order', orderRoutes);
+app.use('/product-category', productCategoryRoutes);
 
 module.exports = app;
