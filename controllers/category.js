@@ -16,9 +16,15 @@ const categoryController = {
                 description: body.description
             });
             category.save((err, categoryStored) =>{
-                if (err) return res.status(500).send({message: 'server_error', err});
+                if (err) return res.status(500).send({ message: 'server_error', err});
                 return res.status(200).send(categoryStored)
             })
+        })
+    },
+    index: (req, res) => {
+        Category.find((err, categories) => {
+            if (err) return res.status(500).send({ message: 'server_error', err});
+            return res.status(200).send(categories)
         })
     }
 };

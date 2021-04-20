@@ -25,6 +25,15 @@ const orderController = {
         });
        
     },
+    confirmation: (req, res) => {
+        const body = req. body;
+        const order = req.params.order;
+        Order.findByIdAndUpdate(order, {...body}, { new: true }, (err, orderUpdated) => {
+            if (err) return res.status(500).send({message: 'server_error', err});
+            // aca se hace el llamado del socket
+            return res.status(200).send(orderUpdated)
+        })
+    },
      // crear los items seleccionados a la orden
     storeItems: async (items, order) => {
         for (const item of items) {

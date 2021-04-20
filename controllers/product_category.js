@@ -1,10 +1,10 @@
 const ProductCategory = require('../models/product_category');
+const Product = require('../models/product');
 const { Validator } = require('node-input-validator');
 
 const productCategoryController = {
     store: (req, res) => {
         const body = req. body;
-        
         const validator = new Validator(body, {
             product: 'required|string',
             category: 'required|string',
@@ -25,6 +25,20 @@ const productCategoryController = {
                 })
             })
         });
+    },
+    index: (req, res) => {
+        const category = req.params.category;
+        if (category) {
+            ProductCategory.find({ category}).populate('product').exec((err, productCategories) => {
+                if (err) return res.status(500).send({message: 'server_error', err});
+                return res.status(200).send(productCategories)
+            });
+        } else {
+            Product.find().exec((err, products) => {
+                if (err) return res.status(500).send({message: 'server_error', err});
+                return res.status(200).send(products)
+            });
+        }
     }
 }
 
